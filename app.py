@@ -1,4 +1,4 @@
-streamlit as stimport
+import streamlit as stimport
 # ส่วนหัวข้อเว็บ (Header)
 st.title("ยินดีต้อนรับสู่โปรไฟล์ของฉัน ✨")
 st.write("นี่คือเว็บแอปพลิเคชันแรกในชีวิตของผม/ดิฉัน เขียนด้วยภาษา Python ค่ะ")
