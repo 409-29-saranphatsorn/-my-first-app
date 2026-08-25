@@ -37,29 +37,29 @@ def show_result_dialog(ans1, ans2, ans3, ans4):
     u_ans3 = ans3.strip().lower()
     u_ans4 = ans4.strip().lower()
 
-    # ตรวจข้อ 1
-    if u_ans1 == "apple":
+    # ตรวจข้อ 1: grape
+    if u_ans1 == "grape":
         st.success("✅ ข้อ 1: ถูกต้อง")
         score += 1
     else:
         st.error(f"❌ ข้อ 1: ยังไม่ถูกต้อง (คุณตอบ '{u_ans1}')")
 
-    # ตรวจข้อ 2
-    if u_ans2 == "fish":
+    # ตรวจข้อ 2: pen
+    if u_ans2 == "pen":
         st.success("✅ ข้อ 2: ถูกต้อง")
         score += 1
     else:
         st.error(f"❌ ข้อ 2: ยังไม่ถูกต้อง (คุณตอบ '{u_ans2}')")
 
-    # ตรวจข้อ 3
-    if u_ans3 == "dog":
+    # ตรวจข้อ 3: gift
+    if u_ans3 == "gift":
         st.success("✅ ข้อ 3: ถูกต้อง")
         score += 1
     else:
         st.error(f"❌ ข้อ 3: ยังไม่ถูกต้อง (คุณตอบ '{u_ans3}')")
 
-    # ตรวจข้อ 4
-    if u_ans4 == "banana":
+    # ตรวจข้อ 4: cherry
+    if u_ans4 == "cherry":
         st.success("✅ ข้อ 4: ถูกต้อง")
         score += 1
     else:
@@ -69,7 +69,7 @@ def show_result_dialog(ans1, ans2, ans3, ans4):
 
     # แสดงผลแพ้-ชนะ
     if score == 4:
-        st.success("🎁 You win!")
+        st.success("🎉 You win!")
     else:
         st.error("💀 You lose!")
 
@@ -93,19 +93,19 @@ st.divider()
 
 # 3. ช่องรับคำตอบ
 ans1 = st.text_input(
-    "ข้อ 1: An `a _ _ l e` a day keeps the doctor away. 🍒",
+    "ข้อ 1: She loves `g _ _ p e`. 🍇",
     value=st.session_state.ans1_val,
 )
 ans2 = st.text_input(
-    "ข้อ 2: Cats love to eat `f _ s h`. 🐟",
+    "ข้อ 2: I like red `p _ n`. 🖊️",
     value=st.session_state.ans2_val,
 )
 ans3 = st.text_input(
-    "ข้อ 3: A `d _ g` is man's best friend. 🐶",
+    "ข้อ 3: My dad sent `g i _ t`. 🎁",
     value=st.session_state.ans3_val,
 )
 ans4 = st.text_input(
-    "ข้อ 4: Monkeys like to eat `b _ n _ n a`. 🍇",
+    "ข้อ 4: I like to eat `c h e _ _ y`. 🍒",
     value=st.session_state.ans4_val,
 )
 
@@ -117,7 +117,7 @@ st.session_state.ans4_val = ans4
 
 # 4. ปุ่มส่งคำตอบและการรีเฟรชเวลานับถอยหลัง
 if "start" in st.session_state and not st.session_state.get("is_ended", False):
-    if st.button("🚗 ส่งคำตอบ"):
+    if st.button("📥 ส่งคำตอบ"):
         st.session_state.is_ended = True
         st.rerun()
 
