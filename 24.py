@@ -1,44 +1,59 @@
 import itertools
 
-# ชุดตัวเลขจากโจทย์
-numbers_sets = [
-    [1, 7, 4, 5],
-    [6, 2, 0, 8],
-    [5, 7, 3, 9],
-    [2, 6, 6, 3]
-]
-
-def solve_24(nums):
+def solve_24(numbers):
+    """
+    ฟังก์ชันค้นหาวิธีการคำนวณให้ได้ผลลัพธ์เท่ากับ 24
+    """
     operators = ['+', '-', '*', '/']
     solutions = set()
-    
-    # สลับหลักตัวเลข
-    for p in itertools.permutations(nums):
-        # สลับเครื่องหมาย
-        for o1, o2, o3 in itertools.product(operators, repeat=3):
-            # รูปแบบวงเล็บต่าง ๆ
+
+    # ลองสลับหลักของตัวเลขทั้งหมด
+    for nums in set(itertools.permutations(numbers)):
+        # ลองสลับเครื่องหมายทั้ง 4 ตัว
+        for ops in itertools.product(operators, repeat=3):
+            # รูปแบบวงเล็บต่าง ๆ ที่เป็นไปได้
             patterns = [
-                f"(({p[0]} {o1} {p[1]}) {o2} {p[2]}) {o3} {p[3]}",
-                f"({p[0]} {o1} ({p[1]} {o2} {p[2]})) {o3} {p[3]}",
-                f"{p[0]} {o1} (({p[1]} {o2} {p[2]}) {o3} {p[3]})",
-                f"{p[0]} {o1} ({p[1]} {o2} ({p[2]} {o3} {p[3]}))",
-                f"({p[0]} {o1} {p[1]}) {o2} ({p[2]} {o3} {p[3]})"
+                f"(({nums[0]} {ops[0]} {nums[1]}) {ops[1]} {nums[2]}) {ops[2]} {nums[3]}",
+                f"({nums[0]} {ops[0]} ({nums[1]} {ops[1]} {nums[2]})) {ops[2]} {nums[3]}",
+                f"{nums[0]} {ops[0]} (({nums[1]} {ops[1]} {nums[2]}) {ops[2]} {nums[3]})",
+                f"{nums[0]} {ops[0]} ({nums[1]} {ops[1]} ({nums[2]} {ops[2]} {nums[3]}))",
+                f"({nums[0]} {ops[0]} {nums[1]}) {ops[1]} ({nums[2]} {ops[2]} {nums[3]})"
             ]
-            
+
             for expr in patterns:
                 try:
-                    # คำนวณผลลัพธ์ ป้องกันปัญหาเรื่องเลขทศนิยม
+                    # คำนวณค่าจากนิพจน์ (หลีกเลี่ยงการหารด้วยศูนย์)
                     if abs(eval(expr) - 24) < 1e-6:
                         solutions.add(expr)
                 except ZeroDivisionError:
-                    pass  # ข้ามกรณีหารด้วย 0
-                    
-    return solutions
+                    continue
 
-# แสดงผลลัพธ์
-for i, nums in enumerate(numbers_sets, 1):
-    results = solve_24(nums)
-    print(f"=== ชุดที่ {i}: {nums} (พบทั้งหมด {len(results)} วิธี) ===")
-    for expr in sorted(results)[:5]:  # แสดงตัวอย่าง 5 วิธีแรก
-        print(f"  • {expr} = 24")
-    print()
+    return list(solutions)
+
+def main():
+    # โจทย์ทั้ง 4 ข้อตามที่กำหนด
+    puzzles = [
+        {"id": 1, "numbers": [1, 7, 4, 5]},
+        {"id": 2, "numbers": [6, 2, 0, 8]},
+        {"id": 3, "numbers": [5, 7, 3, 9]},
+        {"id": 4, "numbers": [2, 6, 6, 3]}
+    ]
+
+    print("=" * 45)
+    print("      เฉลยเกม 24 สำหรับชุดตัวเลขทั้ง 4 ข้อ")
+    print("=" * 45)
+
+    for item in puzzles:
+        nums = item["numbers"]
+        print(f"\nข้อ {item['id']}. ตัวเลข: {nums}")
+        results = solve_24(nums)
+
+        if results:
+            print(f"  พบ {len(results)} วิธีคำนวณ ตัวอย่างเช่น:")
+            for solution in results[:3]:  # แสดงตัวอย่าง 3 วิธีแรก
+                print(f"   • {solution} = 24")
+        else:
+            print("  ❌ ไม่มีวิธีคำนวณให้ได้ 24")
+
+if __name__ == "__main__":
+    main()
